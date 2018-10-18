@@ -48,31 +48,3 @@ func Middleware(fn func(ctx context.Context, event map[string]interface{}) (Resp
 		return resp, err
 	}
 }
-
-// // HoneycombMiddleware will wrap our lambda handle funcs to create
-// // trace for events
-// func HoneycombMiddleware(fn HoneycombLambdaFunction) HoneycombLambdaFunction {
-// 	return func(ctx context.Context, event weatherRequestEvent) (Response, error) {
-// 		startHandler := time.Now()
-
-// 		ctx, span := beeline.StartSpan(ctx, "HoneycombMiddleware")
-// 		span.AddTraceField("application", "intergalactic-weatherary")
-// 		span.AddTraceField("platform", "aws")
-// 		defer span.Send()
-
-// 		addRequestProperties(ctx)
-
-// 		// don't forget to send the events
-// 		defer beeline.Flush(ctx)
-
-// 		resp, err := fn(ctx, event)
-// 		if err != nil {
-// 			span.AddField("lambda.error", err)
-// 		}
-
-// 		span.AddField("response.status_code", resp.StatusCode)
-// 		handlerDuration := time.Since(startHandler)
-// 		span.AddField("timers.total_time_ms", handlerDuration/time.Millisecond)
-// 		return resp, err
-// 	}
-// }
